@@ -24,10 +24,9 @@ def build_vgg19_model(num_classes: int) -> nn.Module:
 
 
 class YOLOv5Backbone(nn.Module):
-    """
-    Loads YOLOv5 via torch.hub and extracts features via a forward hook.
-    NOTE: This mirrors your notebook approach.
-    """
+    
+    #Loads YOLOv5 via torch.hub and extracts features via a forward hook.
+
     def __init__(self, yolo_variant: str = "yolov5s", pretrained: bool = True, freeze: bool = True):
         super().__init__()
 
@@ -54,7 +53,7 @@ class YOLOv5Backbone(nn.Module):
             self._feat = output
 
         stack = self.det.model.model
-        # your notebook used stack[-2]
+    
         stack[-2].register_forward_hook(_hook)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -100,10 +99,9 @@ class YOLOv5Classifier(nn.Module):
 
 
 def unfreeze_last_yolo_layers(model_yolo: YOLOv5Classifier, n_last: int = 30) -> None:
-    """
-    Unfreeze last n_last layers from YOLO backbone stack.
-    Mirrors your notebook logic: model_yolo.backbone.det.model.model
-    """
+   
+    #Unfreeze last n_last layers from YOLO backbone stack.
+
     layers = list(model_yolo.backbone.det.model.model)
     for layer in layers[-n_last:]:
         for p in layer.parameters():
