@@ -1,0 +1,117 @@
+Machine Learning Assignment 4 – Run Instructions
+===============================================
+
+NOTE – FULL EXECUTION
+---------------------
+The full training and evaluation of this assignment were executed on Google Colab.
+
+The Colab notebook can be viewed and executed via the link provided in the README file.
+
+
+
+REQUIRED ENVIRONMENT
+--------------------
+- OS: Windows 10 / 11
+- Python: 3.10
+- Device: CPU (GPU optional)
+- Tested with: C:\Python310\python.exe
+
+
+REQUIRED PYTHON PACKAGES
+------------------------
+The following Python packages are required for local execution:
+
+Core:
+- torch
+- torchvision
+- numpy
+- scipy
+- pillow
+- pandas
+- matplotlib
+
+YOLOv5 dependencies (required by torch.hub):
+- ultralytics
+- tqdm
+- seaborn
+- pyyaml
+- requests
+- opencv-python-headless (<5)
+
+
+
+
+INSTALLATION (WINDOWS)
+----------------------
+All packages can be installed using the following commands:
+
+python -m pip install --user torch torchvision --index-url https://download.pytorch.org/whl/cpu
+python -m pip install --user numpy pandas matplotlib pillow scipy
+python -m pip install --user ultralytics tqdm seaborn pyyaml requests
+python -m pip install --user "opencv-python-headless<5" packaging
+
+
+
+PROJECT STRUCTURE
+-----------------
+Machine-Learning_Assignment4/
+│
+├── src/
+│   ├── data.py          # Dataset loading and preprocessing
+│   ├── models.py        # VGG19 and YOLOv5 model definitions
+│   ├── train_utils.py   # Training and evaluation logic
+│   └── run_splits.py    # Main execution script
+│
+├── data/                # Dataset directory (downloaded automatically)
+├── README.md
+└── how_to_run.txt
+
+
+COMPILATION 
+-----------
+
+python -m py_compile src/data.py src/models.py src/train_utils.py src/run_splits.py
+
+
+
+DRY RUN 
+-------
+A dry run verifies:
+- Dataset loading
+- Model initialization
+- Forward pass for VGG19 and YOLOv5
+- Correct output dimensions (batch_size × 102 classes)
+
+Command:
+
+python -m src.run_splits --dry-run --root . --num-workers 0
+
+Expected output includes lines such as:
+
+[DRY] VGG logits: torch.Size([32, 102])
+[DRY] YOLO logits: torch.Size([32, 102])
+
+This confirms that both models run end-to-end.
+
+
+FULL LOCAL RUN 
+---------------
+A full local run performs training on CPU.
+
+Command:
+
+python -m src.run_splits --root . --num-workers 0
+
+
+NOTES
+-----
+- Model weight files (e.g., yolov5s.pt) are downloaded automatically by torch.hub
+  and are not part of the project source code.
+- Dataset files are downloaded automatically on first execution.
+
+
+SUMMARY
+-------
+- Full training and results: Google Colab (see README)
+- Local verification: dry run (--dry-run)
+- Code correctness: verified via py_compile
