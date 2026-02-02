@@ -62,7 +62,7 @@ def main():
     split_summary("SPLIT1", split1, labels)
     split_summary("SPLIT2", split2, labels)
 
-    # transforms (same policy as notebook)
+    # transforms
     tf_train = build_transforms(args.img_size, train=True)
     tf_eval = build_transforms(args.img_size, train=False)
 
